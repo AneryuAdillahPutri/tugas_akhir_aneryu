@@ -29,19 +29,25 @@ class _PaymentPageState extends State<PaymentPage> {
     }
 
     try {
+      
       await FirebaseFirestore.instance.collection('orders').add({
         'user_email': user.email,
         'user_id': user.uid,
-        'total_price': widget.totalPrice.toDouble(),
+        
+        'total_price': widget.totalPrice.toString(), 
+        
         'payment_method': _selectedPayment,
+        
         'items': cart.items.map((item) {
-    return {
-      'name': item['name'],
-      'image': item['image'],
-      'price': (item['price'] as int).toDouble(), // Ini kuncinya!
-    };
-  }).toList(),
-        'order_date': DateTime.now(),
+          return {
+            'name': item['name'],
+            'image': item['image'],
+            'price': item['price'].toString(),
+          };
+        }).toList(),
+        
+
+        'order_date': DateTime.now().toString(), 
         'status': 'Success'
       });
 
@@ -49,7 +55,6 @@ class _PaymentPageState extends State<PaymentPage> {
 
       if (mounted) {
         setState(() => _isLoading = false);
-
         cart.clearCart();
 
         showDialog(
@@ -63,7 +68,7 @@ class _PaymentPageState extends State<PaymentPage> {
                 Text("Transaksi Berhasil!"),
               ],
             ),
-            content: const Text("Data pesananmu sudah tersimpan aman di Database Server."),
+            content: const Text("Struk belanja berhasil disimpan ke Database."),
             actions: [
               TextButton(
                 onPressed: () {
@@ -82,7 +87,7 @@ class _PaymentPageState extends State<PaymentPage> {
     } catch (e) {
       setState(() => _isLoading = false);
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Gagal menyimpan pesanan: $e"), backgroundColor: Colors.red),
+        SnackBar(content: Text("Error: $e"), backgroundColor: Colors.red),
       );
     }
   }
@@ -90,7 +95,7 @@ class _PaymentPageState extends State<PaymentPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Pembayaran V2- FIX")),
+      appBar: AppBar(title: const Text("Pembayaran")), 
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
@@ -126,7 +131,7 @@ class _PaymentPageState extends State<PaymentPage> {
                         children: [
                           SizedBox(height: 20, width: 20, child: CircularProgressIndicator(color: Colors.white)),
                           SizedBox(width: 10),
-                          Text("Menyimpan ke Database...", style: TextStyle(color: Colors.white)),
+                          Text("Menyimpan...", style: TextStyle(color: Colors.white)),
                         ],
                       )
                     : Text("BAYAR SEKARANG", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
