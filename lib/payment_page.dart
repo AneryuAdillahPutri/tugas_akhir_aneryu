@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart'; // 👈 IMPORT BARU
+import 'package:firebase_auth/firebase_auth.dart'; // Biar tau siapa yg beli
 import 'cart_provider.dart';
 import 'dashboard_page.dart';
 
@@ -12,49 +14,77 @@ class PaymentPage extends StatefulWidget {
 }
 
 class _PaymentPageState extends State<PaymentPage> {
-  // Pilihan metode bayar default
   String _selectedPayment = 'QRIS';
   bool _isLoading = false;
 
   void _processPayment() async {
     setState(() => _isLoading = true);
 
-    // 1. Simulasi Loading (Pura-pura ngehubungin Bank)
-    await Future.delayed(const Duration(seconds: 3));
+    // 1. Ambil data User & Keranjang saat ini
+    final user = FirebaseAuth.instance.currentUser;
+    final cart = Provider.of<CartProvider>(context, listen: false);
+    
+    if (user == null) {
+       // Jaga-jaga kalau belum login (harusnya ga mungkin sampai sini)
+       setState(() => _isLoading = false);
+       return;
+    }
 
-    if (mounted) {
-      setState(() => _isLoading = false);
+    try {
+      // 2. KIRIM DATA KE FIREBASE FIRESTORE (INI FITUR JALUR B) 🔥
+      // Kita bikin koleksi namanya 'orders'
+      await FirebaseFirestore.instance.collection('orders').add({
+        'user_email': user.email,         // Siapa yg beli?
+        'user_id': user.uid,              // ID unik user
+        'total_price': widget.totalPrice, // Total bayar
+        'payment_method': _selectedPayment, // Bayar pake apa
+        'items': cart.items,              // Barang apa aja yg dibeli
+        'order_date': DateTime.now(),     // Kapan belinya (Jam sekarang)
+        'status': 'Success'               // Status transaksi
+      });
 
-      // 2. Kosongkan Keranjang
-      Provider.of<CartProvider>(context, listen: false).clearCart();
+      // 3. Simulasi Loading sebentar biar user sempat napas
+      await Future.delayed(const Duration(seconds: 2));
 
-      // 3. Tampilkan Pesan Sukses
-      showDialog(
-        context: context,
-        barrierDismissible: false, // User gabisa klik luar buat tutup
-        builder: (context) => AlertDialog(
-          title: const Column(
-            children: [
-              Icon(Icons.check_circle, color: Colors.green, size: 60),
-              SizedBox(height: 10),
-              Text("Pembayaran Berhasil!"),
+      if (mounted) {
+        setState(() => _isLoading = false);
+
+        // 4. Kosongkan Keranjang (Karena sudah tersimpan di database)
+        cart.clearCart();
+
+        // 5. Tampilkan Pesan Sukses
+        showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (context) => AlertDialog(
+            title: const Column(
+              children: [
+                Icon(Icons.check_circle, color: Colors.green, size: 60),
+                SizedBox(height: 10),
+                Text("Transaksi Berhasil!"),
+              ],
+            ),
+            content: const Text("Data pesananmu sudah tersimpan aman di Database Server."),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => const DashboardPage()),
+                    (route) => false,
+                  );
+                },
+                child: const Text("OK, Mantap!"),
+              ),
             ],
           ),
-          content: const Text("Terima kasih sudah berbelanja. Paketmu akan segera dikirim!"),
-          actions: [
-            TextButton(
-              onPressed: () {
-                // Balik ke Dashboard & Hapus semua history halaman
-                Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(builder: (context) => const DashboardPage()),
-                  (route) => false,
-                );
-              },
-              child: const Text("OK, Belanja Lagi"),
-            ),
-          ],
-        ),
+        );
+      }
+    } catch (e) {
+      // Kalau ada error koneksi database
+      setState(() => _isLoading = false);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Gagal menyimpan pesanan: $e"), backgroundColor: Colors.red),
       );
     }
   }
@@ -68,10 +98,7 @@ class _PaymentPageState extends State<PaymentPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              "Total Tagihan:",
-              style: TextStyle(fontSize: 16, color: Colors.grey),
-            ),
+            const Text("Total Tagihan:", style: TextStyle(fontSize: 16, color: Colors.grey)),
             Text(
               "Rp ${widget.totalPrice}",
               style: const TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.blue),
@@ -80,18 +107,12 @@ class _PaymentPageState extends State<PaymentPage> {
             const Text("Pilih Metode Pembayaran:", style: TextStyle(fontWeight: FontWeight.bold)),
             const SizedBox(height: 10),
 
-            // PILIHAN 1: QRIS
-            _buildRadioOption("QRIS (GoPay/OVO/Dana)", "QRIS", Icons.qr_code),
-            
-            // PILIHAN 2: TRANSFER BANK
+            _buildRadioOption("QRIS (GoPay/OVO)", "QRIS", Icons.qr_code),
             _buildRadioOption("Transfer Bank (BCA)", "Transfer", Icons.account_balance),
-            
-            // PILIHAN 3: COD
             _buildRadioOption("Bayar di Tempat (COD)", "COD", Icons.local_shipping),
 
             const Spacer(),
 
-            // TOMBOL BAYAR
             SizedBox(
               width: double.infinity,
               height: 50,
@@ -107,11 +128,10 @@ class _PaymentPageState extends State<PaymentPage> {
                         children: [
                           SizedBox(height: 20, width: 20, child: CircularProgressIndicator(color: Colors.white)),
                           SizedBox(width: 10),
-                          Text("Memproses...", style: TextStyle(color: Colors.white)),
+                          Text("Menyimpan ke Database...", style: TextStyle(color: Colors.white)),
                         ],
                       )
-                    : Text("BAYAR SEKARANG (Rp ${widget.totalPrice})", 
-                        style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                    : Text("BAYAR SEKARANG", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
               ),
             ),
           ],
@@ -120,7 +140,6 @@ class _PaymentPageState extends State<PaymentPage> {
     );
   }
 
-  // Widget kecil buat bikin tombol pilihan biar rapi
   Widget _buildRadioOption(String title, String value, IconData icon) {
     return Container(
       margin: const EdgeInsets.only(bottom: 10),
@@ -135,11 +154,7 @@ class _PaymentPageState extends State<PaymentPage> {
         groupValue: _selectedPayment,
         secondary: Icon(icon, color: Colors.blue),
         activeColor: Colors.blue,
-        onChanged: (val) {
-          setState(() {
-            _selectedPayment = val.toString();
-          });
-        },
+        onChanged: (val) => setState(() => _selectedPayment = val.toString()),
       ),
     );
   }
