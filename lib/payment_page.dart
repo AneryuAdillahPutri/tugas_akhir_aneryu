@@ -90,7 +90,7 @@ class _PaymentPageState extends State<PaymentPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Pembayaran")),
+      appBar: AppBar(title: const Text("Pembayaran V2- FIX")),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(

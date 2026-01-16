@@ -81410,7 +81410,7 @@ case 6:case 1:return A.O(q,r)
 case 2:return A.N(o,r)}})
 return A.P($async$vL,r)},
 I(a){var s=this,r=null,q=A.hG(r,B.CY,r,r,new A.dq(B.eS,r,r,r,r,r,B.hw),r,r,B.ds,r),p=A.ach(s.d,A.Jy(r,new A.fj(4,A.fA(12),B.db),r,r,r,r,r,r,!0,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,!1,r,r,r,"Email",r,B.lY,r,r,r,r,r,r,r,r,r,r,r),r,!1),o=A.ach(s.e,A.Jy(r,new A.fj(4,A.fA(12),B.db),r,r,r,r,r,r,!0,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,!1,r,r,r,"Password",r,B.lX,r,r,r,r,r,r,r,r,r,r,r),r,!0),n=s.f?r:s.ga6H(),m=A.wN(r,r,B.ar,r,r,r,r,r,r,r,r,r,r,r,new A.c7(A.fA(12),B.q),r,r,r,r),l=t.p
-return A.MC(r,A.auH(A.jX(A.a([B.Ln,q,B.d2,B.QA,B.Qu,B.Ll,p,B.d2,o,B.el,A.fm(A.Il(s.f?B.xg:B.Qn,n,m),50,1/0),B.d2,A.zM(A.a([B.Ql,A.ac9(B.Qj,new A.agC(a),r)],l),B.aQ,B.dR,B.aD)],l),B.aQ,B.dR,B.aD),B.lt))}}
+return A.MC(r,A.auH(A.jX(A.a([B.Ln,q,B.d2,B.QA,B.Qu,B.Ll,p,B.d2,o,B.el,A.fm(A.Il(s.f?B.xg:B.Qo,n,m),50,1/0),B.d2,A.zM(A.a([B.Qm,A.ac9(B.Qk,new A.agC(a),r)],l),B.aQ,B.dR,B.aD)],l),B.aQ,B.dR,B.aD),B.lt))}}
 A.agx.prototype={
 $0(){return this.a.f=!0},
 $S:0}
@@ -81499,8 +81499,8 @@ break
 case 6:case 1:return A.O(q,r)
 case 2:return A.N(o,r)}})
 return A.P($async$qz,r)},
-I(a){var s=this,r=null,q=A.Y2(r,r,r,B.Qo),p=A.e5("Rp "+s.a.c,r,r,r,B.Pj,r,r),o=s.Bf("QRIS (GoPay/OVO)","QRIS",B.CM),n=s.Bf("Transfer Bank (BCA)","Transfer",B.CC),m=s.Bf("Bayar di Tempat (COD)","COD",B.CH),l=s.e?r:s.ga8B(),k=A.wN(r,r,B.ar,r,r,r,r,r,r,r,r,r,r,r,new A.c7(A.fA(10),B.q),r,r,r,r)
-return A.MC(q,new A.ck(B.ds,A.jX(A.a([B.QD,p,B.el,B.Qm,B.xh,o,n,m,B.LH,A.fm(A.Il(s.e?B.JQ:A.e5("BAYAR SEKARANG",r,r,r,A.ey(r,r,B.j,r,r,r,r,r,r,r,r,r,r,r,B.aL,r,r,!0,r,r,r,r,r,r,r,r),r,r),l,k),50,1/0)],t.p),B.cC,B.aN,B.aD),r))},
+I(a){var s=this,r=null,q=A.Y2(r,r,r,B.Qj),p=A.e5("Rp "+s.a.c,r,r,r,B.Pj,r,r),o=s.Bf("QRIS (GoPay/OVO)","QRIS",B.CM),n=s.Bf("Transfer Bank (BCA)","Transfer",B.CC),m=s.Bf("Bayar di Tempat (COD)","COD",B.CH),l=s.e?r:s.ga8B(),k=A.wN(r,r,B.ar,r,r,r,r,r,r,r,r,r,r,r,new A.c7(A.fA(10),B.q),r,r,r,r)
+return A.MC(q,new A.ck(B.ds,A.jX(A.a([B.QD,p,B.el,B.Qn,B.xh,o,n,m,B.LH,A.fm(A.Il(s.e?B.JQ:A.e5("BAYAR SEKARANG",r,r,r,A.ey(r,r,B.j,r,r,r,r,r,r,r,r,r,r,r,B.aL,r,r,!0,r,r,r,r,r,r,r,r),r,r),l,k),50,1/0)],t.p),B.cC,B.aN,B.aD),r))},
 Bf(a,b,c){var s=null,r=this.d===b,q=A.arK(r?B.ar:B.hJ),p=A.fA(10),o=r?B.eS:B.j,n=A.e5(a,s,s,s,A.ey(s,s,s,s,s,s,s,s,s,s,s,s,s,s,r?B.aL:B.B,s,s,!0,s,s,s,s,s,s,s,s),s,s)
 return A.hG(s,new A.z9(b,this.d,new A.ahZ(this),B.ar,n,A.aov(c,B.ar,s),s,t.GW),s,s,new A.dq(o,s,q,p,s,s,B.aW),s,B.BS,s,s)}}
 A.ai2.prototype={
@@ -86520,8 +86520,8 @@ B.Lx=new A.jn(3,"hide")
 B.U_=new A.jn(4,"remove")
 B.xj=new A.jn(5,"timeout")
 B.Ly=new A.tt(null,null,null,null,null,null,null,null,null,null,null,null,null)
-B.Qk=new A.bW("Akun Berhasil Dibuat! Selamat Datang.",null,null,null,null,null,null,null,null)
-B.Lz=new A.il(B.Qk,B.rq,null,null,null,null,null,null,null,null,null,null,B.c8,null,null,B.bj,B.L,null)
+B.Ql=new A.bW("Akun Berhasil Dibuat! Selamat Datang.",null,null,null,null,null,null,null,null)
+B.Lz=new A.il(B.Ql,B.rq,null,null,null,null,null,null,null,null,null,null,B.c8,null,null,B.bj,B.L,null)
 B.Qf=new A.bW("Barang dihapus",null,null,null,null,null,null,null,null)
 B.LA=new A.il(B.Qf,null,null,null,null,null,null,null,null,null,null,null,B.cE,null,null,B.bj,B.L,null)
 B.Qt=new A.bW("Email dan Password wajib diisi!",null,null,null,null,null,null,null,null)
@@ -86856,11 +86856,11 @@ B.xE=new A.O2(1,"longestLine")
 B.jw=new A.q(!0,B.j,null,null,null,null,null,B.aL,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
 B.Qg=new A.bW("Checkout",null,B.jw,null,null,null,null,null,null)
 B.Qh=new A.bW("Beli",null,B.xD,null,null,null,null,null,null)
-B.Qj=new A.bW("Daftar Sekarang",null,B.d3,null,null,null,null,null,null)
-B.Ql=new A.bW("Belum punya akun?",null,null,null,null,null,null,null,null)
-B.Qm=new A.bW("Pilih Metode Pembayaran:",null,B.d3,null,null,null,null,null,null)
-B.Qn=new A.bW("MASUK",null,B.jw,null,null,null,null,null,null)
-B.Qo=new A.bW("Pembayaran",null,null,null,null,null,null,null,null)
+B.Qj=new A.bW("Pembayaran V2- FIX",null,null,null,null,null,null,null,null)
+B.Qk=new A.bW("Daftar Sekarang",null,B.d3,null,null,null,null,null,null)
+B.Qm=new A.bW("Belum punya akun?",null,null,null,null,null,null,null,null)
+B.Qn=new A.bW("Pilih Metode Pembayaran:",null,B.d3,null,null,null,null,null,null)
+B.Qo=new A.bW("MASUK",null,B.jw,null,null,null,null,null,null)
 B.Qp=new A.bW("Data pesananmu sudah tersimpan aman di Database Server.",null,null,null,null,null,null,null,null)
 B.Qq=new A.bW("DAFTAR SEKARANG",null,B.jw,null,null,null,null,null,null)
 B.jv=new A.q(!0,B.fu,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
