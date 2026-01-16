@@ -32,9 +32,15 @@ class _PaymentPageState extends State<PaymentPage> {
       await FirebaseFirestore.instance.collection('orders').add({
         'user_email': user.email,
         'user_id': user.uid,
-        'total_price': widget.totalPrice,
+        'total_price': widget.totalPrice.toDouble(),
         'payment_method': _selectedPayment,
-        'items': cart.items,
+        'items': cart.items.map((item) {
+    return {
+      'name': item['name'],
+      'image': item['image'],
+      'price': (item['price'] as int).toDouble(), // Ini kuncinya!
+    };
+  }).toList(),
         'order_date': DateTime.now(),
         'status': 'Success'
       });
