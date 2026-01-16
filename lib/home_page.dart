@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'dashboard_page.dart';
-import 'register_page.dart'; // 👈 Jangan lupa import halaman barunya
+import 'register_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -15,7 +15,6 @@ class _HomePageState extends State<HomePage> {
   final TextEditingController _passwordController = TextEditingController();
   bool _isLoading = false;
 
-  // 👇 Fungsi LOGIN (Cuma Login aja, Register dipisah)
   Future<void> _login() async {
     if (_emailController.text.isEmpty || _passwordController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -106,14 +105,12 @@ class _HomePageState extends State<HomePage> {
             
             const SizedBox(height: 20),
             
-            // 👇 Tombol Pindah ke Halaman Register
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text("Belum punya akun?"),
                 TextButton(
                   onPressed: () {
-                    // Pindah ke halaman RegisterPage
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => const RegisterPage()),

@@ -22,7 +22,7 @@ class DefaultFirebaseOptions {
     }
   }
 
-  // 👇 INI DATA ASLI DARI JSON KAMU (BUKAN DUMMY)
+  // INI DATA ASLI DARI JSON KAMU (BUKAN DUMMY)
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyAM8lReK6zsAO78qZxjZ-Bw6BgOq8NUPH8',
     appId: '1:951649145448:android:d886f08002dedd892ba1dd',

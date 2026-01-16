@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:cloud_firestore/cloud_firestore.dart'; // 👈 IMPORT BARU
-import 'package:firebase_auth/firebase_auth.dart'; // Biar tau siapa yg beli
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'cart_provider.dart';
 import 'dashboard_page.dart';
 
@@ -20,39 +20,32 @@ class _PaymentPageState extends State<PaymentPage> {
   void _processPayment() async {
     setState(() => _isLoading = true);
 
-    // 1. Ambil data User & Keranjang saat ini
     final user = FirebaseAuth.instance.currentUser;
     final cart = Provider.of<CartProvider>(context, listen: false);
     
     if (user == null) {
-       // Jaga-jaga kalau belum login (harusnya ga mungkin sampai sini)
        setState(() => _isLoading = false);
        return;
     }
 
     try {
-      // 2. KIRIM DATA KE FIREBASE FIRESTORE (INI FITUR JALUR B) 🔥
-      // Kita bikin koleksi namanya 'orders'
       await FirebaseFirestore.instance.collection('orders').add({
-        'user_email': user.email,         // Siapa yg beli?
-        'user_id': user.uid,              // ID unik user
-        'total_price': widget.totalPrice, // Total bayar
-        'payment_method': _selectedPayment, // Bayar pake apa
-        'items': cart.items,              // Barang apa aja yg dibeli
-        'order_date': DateTime.now(),     // Kapan belinya (Jam sekarang)
-        'status': 'Success'               // Status transaksi
+        'user_email': user.email,
+        'user_id': user.uid,
+        'total_price': widget.totalPrice,
+        'payment_method': _selectedPayment,
+        'items': cart.items,
+        'order_date': DateTime.now(),
+        'status': 'Success'
       });
 
-      // 3. Simulasi Loading sebentar biar user sempat napas
       await Future.delayed(const Duration(seconds: 2));
 
       if (mounted) {
         setState(() => _isLoading = false);
 
-        // 4. Kosongkan Keranjang (Karena sudah tersimpan di database)
         cart.clearCart();
 
-        // 5. Tampilkan Pesan Sukses
         showDialog(
           context: context,
           barrierDismissible: false,
@@ -81,7 +74,6 @@ class _PaymentPageState extends State<PaymentPage> {
         );
       }
     } catch (e) {
-      // Kalau ada error koneksi database
       setState(() => _isLoading = false);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Gagal menyimpan pesanan: $e"), backgroundColor: Colors.red),

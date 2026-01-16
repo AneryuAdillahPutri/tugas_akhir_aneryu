@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'cart_provider.dart';
-import 'payment_page.dart'; // Pastikan file payment_page.dart sudah ada ya!
+import 'payment_page.dart';
 
 class CartPage extends StatelessWidget {
   const CartPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // Panggil data keranjang
     final cart = Provider.of<CartProvider>(context);
 
     return Scaffold(
@@ -19,7 +18,6 @@ class CartPage extends StatelessWidget {
       ),
       body: cart.items.isEmpty
           ? const Center(
-              // Tampilan kalau keranjang KOSONG
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -34,7 +32,6 @@ class CartPage extends StatelessWidget {
             )
           : Column(
               children: [
-                // 1. DAFTAR BARANG (List)
                 Expanded(
                   child: ListView.builder(
                     itemCount: cart.items.length,
@@ -46,7 +43,6 @@ class CartPage extends StatelessWidget {
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: ListTile(
-                            // Foto Barang di Kiri
                             leading: ClipRRect(
                               borderRadius: BorderRadius.circular(8),
                               child: Image.network(
@@ -57,13 +53,11 @@ class CartPage extends StatelessWidget {
                                 errorBuilder: (ctx, error, stack) => const Icon(Icons.error),
                               ),
                             ),
-                            // Nama & Harga
                             title: Text(item['name'], style: const TextStyle(fontWeight: FontWeight.bold)),
                             subtitle: Text(
                               "Rp ${item['price']}",
                               style: const TextStyle(color: Colors.blue),
                             ),
-                            // Tombol Hapus (Sampah) di Kanan
                             trailing: IconButton(
                               icon: const Icon(Icons.delete, color: Colors.redAccent),
                               onPressed: () {
@@ -82,8 +76,7 @@ class CartPage extends StatelessWidget {
                     },
                   ),
                 ),
-
-                // 2. BAGIAN BAWAH (Total & Tombol Checkout)
+                
                 Container(
                   padding: const EdgeInsets.all(20),
                   decoration: BoxDecoration(
@@ -116,9 +109,8 @@ class CartPage extends StatelessWidget {
                       ),
                       ElevatedButton(
                         onPressed: cart.items.isEmpty
-                            ? null // Tombol mati kalau kosong
+                            ? null 
                             : () {
-                                // Pindah ke Halaman Pembayaran
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(

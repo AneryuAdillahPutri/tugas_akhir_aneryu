@@ -14,7 +14,6 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _passwordController = TextEditingController();
   bool _isLoading = false;
 
-  // 👇 Fungsi Register
   Future<void> _register() async {
     if (_emailController.text.isEmpty || _passwordController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -26,7 +25,6 @@ class _RegisterPageState extends State<RegisterPage> {
     setState(() => _isLoading = true);
 
     try {
-      // Panggil Firebase untuk buat akun baru
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: _emailController.text.trim(),
         password: _passwordController.text.trim(),
@@ -34,14 +32,13 @@ class _RegisterPageState extends State<RegisterPage> {
 
       if (mounted) {
         setState(() => _isLoading = false);
-        // Kalau sukses, langsung masuk ke Dashboard
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text("Akun Berhasil Dibuat! Selamat Datang."), backgroundColor: Colors.green),
         );
         Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (context) => const DashboardPage()),
-          (route) => false, // Hapus riwayat halaman sebelumnya
+          (route) => false,
         );
       }
     } on FirebaseAuthException catch (e) {
@@ -66,7 +63,6 @@ class _RegisterPageState extends State<RegisterPage> {
         child: Column(
           children: [
             const SizedBox(height: 20),
-            // Icon Pemanis
             Container(
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.blue.shade50),
@@ -81,7 +77,6 @@ class _RegisterPageState extends State<RegisterPage> {
             const Text("Isi data diri di bawah ini", style: TextStyle(color: Colors.grey)),
             const SizedBox(height: 30),
 
-            // Input Email
             TextField(
               controller: _emailController,
               keyboardType: TextInputType.emailAddress,
@@ -93,7 +88,6 @@ class _RegisterPageState extends State<RegisterPage> {
             ),
             const SizedBox(height: 20),
 
-            // Input Password
             TextField(
               controller: _passwordController,
               obscureText: true,
@@ -105,7 +99,6 @@ class _RegisterPageState extends State<RegisterPage> {
             ),
             const SizedBox(height: 30),
 
-            // Tombol Daftar
             SizedBox(
               width: double.infinity,
               height: 50,

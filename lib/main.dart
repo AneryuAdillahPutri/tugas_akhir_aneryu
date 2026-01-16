@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart'; // Wajib
+import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 import 'cart_provider.dart';
 import 'home_page.dart';
@@ -7,7 +7,6 @@ import 'home_page.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   
-  // KITA PAKSA APLIKASI BACA KUNCI INI (BYPASS FILE JSON YANG RUSAK)
   await Firebase.initializeApp(
     options: const FirebaseOptions(
       apiKey: 'AIzaSyAM8lReK6zsAO78qZxjZ-Bw6BgOq8NUPH8', 
