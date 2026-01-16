@@ -10,27 +10,27 @@ class DashboardPage extends StatelessWidget {
   final List<Map<String, dynamic>> products = const [
     {
       'name': 'Laptop Gaming',
-      'price': '15.000.000',
+      'price': 15000000,
       'image': 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=150'
     },
     {
       'name': 'Mouse Wireless',
-      'price': '150.000',
+      'price': 150000,
       'image': 'https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=150'
     },
     {
       'name': 'Keyboard RGB',
-      'price': '500.000',
+      'price': 500000,
       'image': 'https://images.unsplash.com/photo-1587829741301-dc798b91a603?w=150'
     },
     {
       'name': 'Monitor 24 Inch',
-      'price': '2.000.000',
+      'price': 2000000,
       'image': 'https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=150'
     },
     {
       'name': 'Headset Bass',
-      'price': '350.000',
+      'price': 350000,
       'image': 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=150'
     },
   ];
