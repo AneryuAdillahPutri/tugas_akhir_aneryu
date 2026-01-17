@@ -33,28 +33,18 @@ class _PaymentPageState extends State<PaymentPage> {
       await FirebaseFirestore.instance.collection('orders').add({
         'user_email': user.email,
         'user_id': user.uid,
-        
-        'total_price': widget.totalPrice.toString(), 
-        
-        'payment_method': _selectedPayment,
-        
-        'items': cart.items.map((item) {
-          return {
-            'name': item['name'],
-            'image': item['image'],
-            'price': item['price'].toString(),
-          };
-        }).toList(),
-        
-
-        'order_date': DateTime.now().toString(), 
-        'status': 'Success'
+        'total_tagihan': "Rp ${widget.totalPrice}",
+        'metode_bayar': _selectedPayment,
+        'tanggal_transaksi': DateTime.now().toString(),
+        'status': 'Berhasil',
+        'info': 'Data struk disederhanakan untuk Tugas Akhir'
       });
 
       await Future.delayed(const Duration(seconds: 2));
 
       if (mounted) {
         setState(() => _isLoading = false);
+        
         cart.clearCart();
 
         showDialog(
@@ -65,10 +55,10 @@ class _PaymentPageState extends State<PaymentPage> {
               children: [
                 Icon(Icons.check_circle, color: Colors.green, size: 60),
                 SizedBox(height: 10),
-                Text("Transaksi Berhasil!"),
+                Text("Pembayaran Sukses!"),
               ],
             ),
-            content: const Text("Struk belanja berhasil disimpan ke Database."),
+            content: const Text("Terima kasih! Pesananmu sedang diproses."),
             actions: [
               TextButton(
                 onPressed: () {
@@ -78,7 +68,7 @@ class _PaymentPageState extends State<PaymentPage> {
                     (route) => false,
                   );
                 },
-                child: const Text("OK, Mantap!"),
+                child: const Text("OK"),
               ),
             ],
           ),
@@ -87,7 +77,7 @@ class _PaymentPageState extends State<PaymentPage> {
     } catch (e) {
       setState(() => _isLoading = false);
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Error: $e"), backgroundColor: Colors.red),
+        SnackBar(content: Text("Gagal: $e"), backgroundColor: Colors.red),
       );
     }
   }
@@ -95,19 +85,19 @@ class _PaymentPageState extends State<PaymentPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Pembayaran")), 
+      appBar: AppBar(title: const Text("Konfirmasi Pembayaran")),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text("Total Tagihan:", style: TextStyle(fontSize: 16, color: Colors.grey)),
+            const Text("Total yang harus dibayar:", style: TextStyle(fontSize: 16, color: Colors.grey)),
             Text(
               "Rp ${widget.totalPrice}",
               style: const TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.blue),
             ),
             const SizedBox(height: 30),
-            const Text("Pilih Metode Pembayaran:", style: TextStyle(fontWeight: FontWeight.bold)),
+            const Text("Metode Pembayaran:", style: TextStyle(fontWeight: FontWeight.bold)),
             const SizedBox(height: 10),
 
             _buildRadioOption("QRIS (GoPay/OVO)", "QRIS", Icons.qr_code),
@@ -131,10 +121,10 @@ class _PaymentPageState extends State<PaymentPage> {
                         children: [
                           SizedBox(height: 20, width: 20, child: CircularProgressIndicator(color: Colors.white)),
                           SizedBox(width: 10),
-                          Text("Menyimpan...", style: TextStyle(color: Colors.white)),
+                          Text("Memproses...", style: TextStyle(color: Colors.white)),
                         ],
                       )
-                    : Text("BAYAR SEKARANG", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                    : const Text("BAYAR SEKARANG", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
               ),
             ),
           ],
